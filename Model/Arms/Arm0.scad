@@ -35,22 +35,47 @@ module armSides(length,height, width, thickness) {
     beam(length, height, thickness);
     translate([0,width-thickness,0])
     beam(length, height, thickness);
-    
-    
-    
+}
 
+module engineMount(radius, height, thickness, middleHoleRadius) {
+    difference() {
+        cylinder(h=height, r=radius);
+        translate([0,0,thickness])
+        cylinder(h=height, r=(radius-thickness));
+        translate([0,0,-1])
+        cylinder(h= height+2, r=middleHoleRadius);
+    }
+    
     
 }
 
-module arm(length,height, width, thickness, numCrosses) {
+module armBeam(length,height, width, thickness, numCrosses) {
     armSides(length,height, width, thickness);
     for (i = [0:numCrosses-1])
         translate([length/numCrosses*i,0,0])
-        cross(length/numCrosses, height, width, thickness);
+        cross(length/numCrosses, height*0.85, width, thickness);
+    
+    
+    difference() {
+        translate([0,width/2-thickness,0])
+        beam(length-thickness, height, thickness*2);  
+        
+    }
+}
+
+module leg(length, height, thickness, legHeight, mountRadius, offset) {
+   
+    
+}
+
+module arm(length,height, width, thickness, engineRadius, engineHoleRadius) {
+    armBeam(length,height,width,thickness, round(length/width+0.499));
+    translate([length-thickness+engineRadius,width/2,0])
+    engineMount(engineRadius+thickness, height*1.5, thickness, engineHoleRadius);
     
     
 }
 
 
-arm(10, 0.35, 1 , 0.1, 10);
+arm(10, 0.35, 1 , 0.1, 0.75, 0.125);
 
