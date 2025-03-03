@@ -85,7 +85,7 @@ module leg(length, height, thickness, legHeight, mountRadius, hOffset) {
 }
 
 module arm(length, height, width, thickness, engineRadius, engineHoleRadius, legHeight, legOffset) {
-    armBeam(length,height,width,thickness, round(length/width+0.499));
+    armBeam(length,height,width,thickness, ceil(length/width));
     
     
     
