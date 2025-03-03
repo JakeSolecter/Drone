@@ -9,9 +9,25 @@ module beam(length,height, thickness) {
 
 }
 
+
+
 module cross(length, height, width, thickness) {
-    rotate([0,0,atan(width/length)])
-    beam(sqrt(length*length+width*width), height, thickness);
+    difference() {
+        translate([0,thickness,0])
+        rotate([0,0,atan(width/length)])
+        translate([0,-thickness,0])
+        beam(sqrt(length*length+width*width), height, thickness);
+        translate([0,-thickness,-0.5])
+        armSides(length+width,height+1,width+2*thickness,thickness);
+    }
+    
+    difference() {
+        translate([0,width-thickness,0])
+        rotate([0,0,-atan(width/length)])
+        beam(sqrt(length*length+width*width), height, thickness);
+        translate([0,-thickness,-0.5])
+        armSides(length+width,height+1,width+2*thickness,thickness);
+    }
     
 }
 
@@ -20,8 +36,21 @@ module armSides(length,height, width, thickness) {
     translate([0,width-thickness,0])
     beam(length, height, thickness);
     
+    
+    
+
+    
 }
 
-armSides(10, 1, 3 ,0.4);
+module arm(length,height, width, thickness, numCrosses) {
+    armSides(length,height, width, thickness);
+    for (i = [0:numCrosses-1])
+        translate([length/numCrosses*i,0,0])
+        cross(length/numCrosses, height, width, thickness);
+    
+    
+}
 
-cross(3,1,3, 0.4);
+
+arm(10, 0.35, 1 , 0.1, 10);
+
