@@ -1,5 +1,5 @@
 $fa = 1;
-$fs = 0.04;
+$fs = 0.01;
 
 
 module beam(length,height, thickness) {
@@ -63,19 +63,40 @@ module armBeam(length,height, width, thickness, numCrosses) {
     }
 }
 
-module leg(length, height, thickness, legHeight, mountRadius, offset) {
-   
+module leg(length, height, thickness, legHeight, mountRadius, hOffset) {
+    
+   translate([-height,0,0])
+   beam(height, height*1.5, 2*thickness);
+    //foot
+   translate([-hOffset-length,0,legHeight])
+    beam(length,height,2*thickness);
+    
+    //outer connection
+   translate([0,0,1.5*height])
+    rotate([0,-atan(hOffset/(legHeight-height*1.5+height)),0])
+    translate([-height,0,0])
+    beam(height,sqrt(hOffset*hOffset + (legHeight-height*0.5)*(legHeight-height*0.5)),thickness*2);
+    
+    //inner connection
+    translate([-hOffset-length*2,0,height])
+    rotate([0,90-atan((legHeight)/length),0])
+    beam(height, sqrt(pow(legHeight,2)+pow(length,2)) ,thickness*2);
     
 }
 
-module arm(length,height, width, thickness, engineRadius, engineHoleRadius) {
+module arm(length, height, width, thickness, engineRadius, engineHoleRadius, legHeight, legOffset) {
     armBeam(length,height,width,thickness, round(length/width+0.499));
+    
+    
+    
     translate([length-thickness+engineRadius,width/2,0])
     engineMount(engineRadius+thickness, height*1.5, thickness, engineHoleRadius);
     
+    translate([length+engineRadius*2,width/2-thickness,0])
+    leg(length/5, height, thickness,legHeight, engineRadius+thickness, legOffset);
     
 }
 
 
-arm(10, 0.35, 1 , 0.1, 0.75, 0.125);
+arm(7, 0.35, 1 , 0.1, 0.75, 0.125, 2.5, 0.5);
 
