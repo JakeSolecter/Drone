@@ -1,6 +1,8 @@
 $fa = 1;
 $fs = 0.01;
 
+include <Connector0.scad>
+
 
 module beam(length,height, thickness) {
     scale([length,thickness,height])
@@ -97,6 +99,25 @@ module arm(length, height, width, thickness, engineRadius, engineHoleRadius, leg
     
 }
 
+module ConnectedArm(length, height, width, thickness, 
+    engineRadius, engineHoleRadius, legHeight, legOffset, plateSpace, connectorLength, holeSize, connectorHeight, connectorRoundness) {
+    
+        
+        
+    union() {
+    arm(length, height, width, thickness, engineRadius, engineHoleRadius, legHeight, legOffset);
+    
+    
+    translate([0,10,0])
+    rotate([0,0,180])
+    ArmConnector(plateSpace, width, connectorLength, holeSize, thickness, connectorHeight, height, connectorRoundness);
+        
+    
+    }
+    
+}
 
-arm(7, 0.35, 1 , 0.1, 0.75, 0.125, 2.5, 0.5);
+
+ConnectedArm(70, 3.5, 10 , 1, 7.5, 1.25, 25, 5, 10, 10, 2, 2.5, 2);
+
 
