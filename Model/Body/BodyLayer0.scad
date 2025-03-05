@@ -11,14 +11,31 @@ connectorLength = 10;
 $fa = 1;
 $fs = 0.01;
 
+
+module RaspPlatformCornerCut(distance) {
+    translate([sqrt(distance*distance/2),sqrt(distance*distance/2),0])
+    translate([distance*(sqrt(2)/4),distance*(sqrt(2)/4),0])
+    rotate([0,0,45])
+    scale([distance,distance,distance])
+    cube(1,center = true);
+    
+    
+}
+
+
+
 module RaspPlatform() {
     difference() {
-        scale([90,90,1.5])
+        scale([70,70,1.5])
         translate([0,0,0.5])
         cube(1, center = true);
         
         union() {
             PiHoles();
+            
+            for (i=[0:3])
+                rotate([0,0,90*i])
+                RaspPlatformCornerCut(40);
             
             
             //horrible but works
@@ -39,7 +56,7 @@ translate([0,-width/2,0])
 translate([20,20,0])
 rotate([0,0,45])
 translate([0,-width/2,0])
-%ConnectedArm(70, 3.5, width , thickness, 7.5, 1.25, 25, 5, plateSpace, connectorLength, holeSize, 2.5, 2);
+#ConnectedArm(70, 3.5, width , thickness, 7.5, 1.25, 25, 5, plateSpace, connectorLength, holeSize, 2.5, 2);
 
 translate([0,0, 20])
 #RaspberryPi();
