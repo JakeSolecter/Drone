@@ -1,5 +1,5 @@
 $fa = 1;
-$fs = 0.01;
+$fs = 0.05;
 
 include <Connector0.scad>
 

@@ -13,8 +13,12 @@ module PiHoles() {
 
 
 module RaspberryPi() {
+    translate([0,0,2.5])
+    union() {
     scale([65, 30, 5])
     cube(1, center = true);
     PiHoles();
+        
+    }
     
 }

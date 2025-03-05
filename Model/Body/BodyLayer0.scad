@@ -1,4 +1,5 @@
 include <../Components/RaspberryPI.scad>
+include <../Components/GY521.scad>
 include <../Arms/Arm0.scad>
 
 
@@ -30,9 +31,9 @@ module RaspPlatformEdgeCut(size, offset) {
 
 
 
-module RaspPlatform(size) {
+module RaspPlatform(size, height) {
     difference() {
-        scale([size,size,1.5])
+        scale([size,size,height])
         translate([0,0,0.5])
         cube(1, center = true);
         
@@ -59,7 +60,7 @@ translate([0,-width/2,0])
 
 
 
-
+/*
 
 translate([20,20,0])
 rotate([0,0,45])
@@ -68,8 +69,11 @@ translate([0,-width/2,0])
 
 translate([0,0, 20])
 #RaspberryPi();
-RaspPlatform(70);
+RaspPlatform(70,1.5);
 
 
+
+
+*/
 
 
