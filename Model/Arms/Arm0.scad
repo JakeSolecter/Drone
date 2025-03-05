@@ -103,7 +103,7 @@ module ConnectedArm(length, height, width, thickness,
     engineRadius, engineHoleRadius, legHeight, legOffset, plateSpace, connectorLength, holeSize, connectorHeight, connectorRoundness) {
     
         
-        
+    translate([connectorLength,0,0])
     union() {
     arm(length, height, width, thickness, engineRadius, engineHoleRadius, legHeight, legOffset);
     
