@@ -4,7 +4,7 @@ $fs = 0.01;
 include <Connector0.scad>
 
 
-module beam(length,height, thickness) {
+module Beam(length,height, thickness) {
     scale([length,thickness,height])
     cube(1);
 
@@ -13,33 +13,33 @@ module beam(length,height, thickness) {
 
 
 
-module cross(length, height, width, thickness) {
+module Cross(length, height, width, thickness) {
     difference() {
         translate([0,thickness,0])
         rotate([0,0,atan(width/length)])
         translate([0,-thickness,0])
-        beam(sqrt(length*length+width*width), height, thickness);
+        Beam(sqrt(length*length+width*width), height, thickness);
         translate([0,-thickness,-0.5])
-        armSides(length+width,height+1,width+2*thickness,thickness);
+        ArmSides(length+width,height+1,width+2*thickness,thickness);
     }
     
     difference() {
         translate([0,width-thickness,0])
         rotate([0,0,-atan(width/length)])
-        beam(sqrt(length*length+width*width), height, thickness);
+        Beam(sqrt(length*length+width*width), height, thickness);
         translate([0,-thickness,-0.5])
-        armSides(length+width,height+1,width+2*thickness,thickness);
+        ArmSides(length+width,height+1,width+2*thickness,thickness);
     }
     
 }
 
-module armSides(length,height, width, thickness) {
-    beam(length, height, thickness);
+module ArmSides(length,height, width, thickness) {
+    Beam(length, height, thickness);
     translate([0,width-thickness,0])
-    beam(length, height, thickness);
+    Beam(length, height, thickness);
 }
 
-module engineMount(radius, height, thickness, middleHoleRadius) {
+module EngineMount(radius, height, thickness, middleHoleRadius) {
     difference() {
         cylinder(h=height, r=radius);
         translate([0,0,thickness])
@@ -51,51 +51,51 @@ module engineMount(radius, height, thickness, middleHoleRadius) {
     
 }
 
-module armBeam(length,height, width, thickness, numCrosses) {
-    armSides(length,height, width, thickness);
+module ArmBeam(length,height, width, thickness, numCrosses) {
+    ArmSides(length,height, width, thickness);
     for (i = [0:numCrosses-1])
         translate([length/numCrosses*i,0,0])
-        cross(length/numCrosses, height*0.85, width, thickness);
+        Cross(length/numCrosses, height*0.85, width, thickness);
     
     
     difference() {
         translate([0,width/2-thickness,0])
-        beam(length-thickness, height, thickness*2);  
+        Beam(length-thickness, height, thickness*2);  
         
     }
 }
 
-module leg(length, height, thickness, legHeight, mountRadius, hOffset) {
+module Leg(length, height, thickness, legHeight, mountRadius, hOffset) {
     
    translate([-height,0,0])
-   beam(height, height*1.5, 2*thickness);
+   Beam(height, height*1.5, 2*thickness);
     //foot
    translate([-hOffset-length,0,legHeight])
-    beam(length,height,2*thickness);
+    Beam(length,height,2*thickness);
     
     //outer connection
    translate([0,0,1.5*height])
     rotate([0,-atan(hOffset/(legHeight-height*1.5+height)),0])
     translate([-height,0,0])
-    beam(height,sqrt(hOffset*hOffset + (legHeight-height*0.5)*(legHeight-height*0.5)),thickness*2);
+    Beam(height,sqrt(hOffset*hOffset + (legHeight-height*0.5)*(legHeight-height*0.5)),thickness*2);
     
     //inner connection
     translate([-hOffset-length*2,0,height])
     rotate([0,90-atan((legHeight)/length),0])
-    beam(height, sqrt(pow(legHeight,2)+pow(length,2)) ,thickness*2);
+    Beam(height, sqrt(pow(legHeight,2)+pow(length,2)) ,thickness*2);
     
 }
 
-module arm(length, height, width, thickness, engineRadius, engineHoleRadius, legHeight, legOffset) {
-    armBeam(length,height,width,thickness, ceil(length/width));
+module Arm(length, height, width, thickness, engineRadius, engineHoleRadius, legHeight, legOffset) {
+    ArmBeam(length,height,width,thickness, ceil(length/width));
     
     
     
     translate([length-thickness+engineRadius,width/2,0])
-    engineMount(engineRadius+thickness, height*1.5, thickness, engineHoleRadius);
+    EngineMount(engineRadius+thickness, height*1.5, thickness, engineHoleRadius);
     
     translate([length+engineRadius*2,width/2-thickness,0])
-    leg(length/5, height, thickness,legHeight, engineRadius+thickness, legOffset);
+    Leg(length/5, height, thickness,legHeight, engineRadius+thickness, legOffset);
     
 }
 
@@ -105,7 +105,7 @@ module ConnectedArm(length, height, width, thickness,
         
     translate([connectorLength,0,0])
     union() {
-    arm(length, height, width, thickness, engineRadius, engineHoleRadius, legHeight, legOffset);
+    Arm(length, height, width, thickness, engineRadius, engineHoleRadius, legHeight, legOffset);
     
     
     translate([0,10,0])
