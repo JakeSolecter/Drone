@@ -22,17 +22,25 @@ module RaspPlatformCornerCut(distance) {
     
 }
 
+module RaspPlatformEdgeCut(size, offset) {
+    translate([0,offset, -1])
+    cylinder(h=offset, r = size);
+    
+}
 
 
-module RaspPlatform() {
+
+module RaspPlatform(size) {
     difference() {
-        scale([70,70,1.5])
+        scale([size,size,1.5])
         translate([0,0,0.5])
         cube(1, center = true);
         
         union() {
             PiHoles();
-            
+            for (i=[0:1])
+                rotate([0,0,180*i])
+            RaspPlatformEdgeCut(37, sqrt(40*40*2)+3);
             for (i=[0:3])
                 rotate([0,0,90*i])
                 RaspPlatformCornerCut(40);
@@ -60,7 +68,7 @@ translate([0,-width/2,0])
 
 translate([0,0, 20])
 #RaspberryPi();
-RaspPlatform();
+RaspPlatform(70);
 
 
 
