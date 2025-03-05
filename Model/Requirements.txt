@@ -1,1 +1,2 @@
 https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-product-brief.pdf
+https://eckstein-shop.de/GY-521GyroskopAccelerometer6DOF3-AchsenIMUModulMPU-6050fC3BCrArduinoRaspberryPiEN
