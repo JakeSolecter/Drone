@@ -69,11 +69,14 @@ translate([0,-width/2,0])
 
 translate([0,0, 20])
 #RaspberryPi();
+
+
+*/
+projection(cut = false)
 RaspPlatform(70,1.5);
 
 
 
 
-*/
 
 
