@@ -1,33 +1,14 @@
-extern crate glfw;
+extern crate glium;
 
-use glfw::{Action, Context, Key, fail_on_errors};
+use glium::*;
 
 fn main() {
-    let mut glfw = glfw::init(glfw::fail_on_errors!()).unwrap();
-
-    let (mut window, events) = glfw.create_window(800, 600, "Testing ground", glfw::WindowMode::Windowed).expect("Couldn't create window");
-    window.set_key_polling(true);
-    window.make_current();
+    
+    //let event_loop = winit::event_loop::EventLoopBuilder::new().build().unwrap();
+    let event_loop: winit::event_loop::EventLoop<()> = winit::event_loop::EventLoop::builder().build().unwrap();
 
 
-    while !window.should_close() {
-        glfw.poll_events();
-
-        for (_, event) in glfw::flush_messages(&events) {
-            handleWindowEvent(&mut window, event);
-        }
-    }
+    let (window, display) = glium::backend::glutin::SimpleWindowBuilder::new().build(&event_loop);
 
 }
 
-
-
-fn handleWindowEvent(window: &mut glfw::Window, event: glfw::WindowEvent) {
-    match event {
-        glfw::WindowEvent::Key(Key::Escape, _, Action::Press , _) => {
-            window.set_should_close(true);
-        }
-
-        _ => {}
-    }
-}

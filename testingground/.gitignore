@@ -3,3 +3,4 @@
 !.gitignore
 !flake.nix
 !src
+!Cargo.toml
