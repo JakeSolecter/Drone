@@ -18,7 +18,7 @@
         packages = with pkgs;[
           nixos-generators
           whois
-          
+          util-linux
         ];
 
        
