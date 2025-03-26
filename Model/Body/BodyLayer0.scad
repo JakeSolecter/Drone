@@ -1,6 +1,8 @@
 include <../Components/RaspberryPI.scad>
 include <../Components/GY521.scad>
 include <../Arms/Arm0.scad>
+include <../Components/GY87.scad>
+include <../Components/F4_ESC.scad>
 
 
 holeSize=2;
@@ -38,6 +40,13 @@ module RaspPlatform(size, height) {
         cube(1, center = true);
         
         union() {
+            translate([-17.5,0,0])
+            rotate([0,0,90])
+            GY87_holes();
+            
+            translate([11,0,0])
+            F4_ESC_holes();
+            
             PiHoles();
             for (i=[0:1])
                 rotate([0,0,180*i])
@@ -74,6 +83,11 @@ translate([0,0, 20])
 */
 projection(cut = false)
 RaspPlatform(70,1.5);
+//translate([-17.5,0,0])
+//rotate([0,0,90])
+//#GY87();
+//translate([11,0,0])
+//#F4_ESC();
 
 
 
