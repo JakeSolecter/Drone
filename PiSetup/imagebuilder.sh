@@ -1,2 +1,0 @@
-#!/bin/bash
-NIX_PATH=nixpkgs=https://github.com//NixOS/nixpkgs/archive/refs/tags/24.11.tar.gz nix-shell -p nixos-generators --run "nixos-generate --format iso --configuration ./configuration.nix -o result"
