@@ -118,6 +118,6 @@ module ConnectedArm(length, height, width, thickness,
 }
 
 
-//ConnectedArm(70, 3.5, 10 , 1, 7.5, 1.25, 25, 5, 10, 10, 2, 2.5, 2);
+//ConnectedArm(70, 3.5, 10 , 1, 7.5, 1.25, 25, 5, 10, 10, 2.5, 2.5, 2);
 
 
